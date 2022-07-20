@@ -5,7 +5,12 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.register = exports.login = void 0;
 
-const register = async (req, res) => {
+const register = (req, res) => {
+  if (!req.body.text) {
+    res.status(400);
+    throw new Error('Error Message');
+  }
+
   res.status(200).json({
     message: 'Register User'
   });
@@ -13,7 +18,7 @@ const register = async (req, res) => {
 
 exports.register = register;
 
-const login = async (req, res) => {
+const login = (req, res) => {
   res.status(200).json({
     message: 'Login User'
   });

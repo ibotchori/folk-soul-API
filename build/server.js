@@ -4,6 +4,8 @@ var _express = _interopRequireDefault(require("express"));
 
 var _routes = require("./routes");
 
+var _errorMiddleware = require("./middleware/errorMiddleware");
+
 var _dotenv = _interopRequireDefault(require("dotenv"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -19,5 +21,8 @@ server.use(_express.default.urlencoded({
   extended: false
 })); // <-- url encode
 
-server.use('/api/user', _routes.userRoutes);
+server.use('/api/user', _routes.userRoutes); // overwrite the default express error handler with custom error handler middleware
+
+server.use(_errorMiddleware.errorHandler); // <-- error handler middleware
+
 server.listen(PORT, () => console.log(`Server is listening at http://localhost:${PORT}`));
