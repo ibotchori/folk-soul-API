@@ -11,6 +11,13 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 _dotenv.default.config();
 
 const PORT = process.env.SERVER_PORT || 4444;
-const server = (0, _express.default)();
+const server = (0, _express.default)(); // Middleware
+
+server.use(_express.default.json()); // <-- body parser
+
+server.use(_express.default.urlencoded({
+  extended: false
+})); // <-- url encode
+
 server.use('/api/user', _routes.userRoutes);
 server.listen(PORT, () => console.log(`Server is listening at http://localhost:${PORT}`));
