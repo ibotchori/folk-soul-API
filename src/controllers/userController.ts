@@ -7,6 +7,13 @@ import userLoginSchema from 'schemas/userLoginSchema'
 import jwt from 'jsonwebtoken'
 import mongoose from 'mongoose'
 
+/* Generate JWT */
+const generateToken = (id: mongoose.Types.ObjectId) =>
+  // it takes 3 argument. 1 payload, passed in {id} (set the id in the token). 2 secret. 3 expires in
+  jwt.sign({ id }, process.env.JWT_SECRET, {
+    expiresIn: '30d',
+  })
+
 export const userRegister = asyncHandler(
   async (req: Request, res: Response) => {
     /* Validation with Joi */
@@ -60,14 +67,9 @@ export const userLogin = asyncHandler(async (req: Request, res: Response) => {
 
   const passwordIsCorrect = await bcrypt.compare(password, userExist.password)
   if (userExist && passwordIsCorrect) {
-    let key: any = process.env.JWT_SECRET
-    let id: mongoose.Types.ObjectId = userExist._id
     // back token on response
     res.json({
-      // generate token
-      token: jwt.sign({ id }, key, {
-        expiresIn: '30d',
-      }),
+      token: generateToken(userExist._id),
     })
   } else {
     // if password is incorrect
