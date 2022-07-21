@@ -1,12 +1,6 @@
 import Joi from 'joi'
-import mongoose from 'mongoose'
+import { userInterface } from 'types/Joi'
 import User from '../models/userModel'
-
-interface userInterface {
-  _id: mongoose.Types.ObjectId
-  username: string
-  password: string
-}
 
 const usernameShouldBeUniqueRule =
   (user: userInterface | null) => (value: string, helper: any) => {
@@ -19,7 +13,7 @@ const usernameShouldBeUniqueRule =
     return value
   }
 
-const userRegistrationSchema = async (data: any) => {
+const userRegistrationSchema = async (data: userInterface) => {
   const foundUserWithUsername = await User.findOne({ username: data.username })
 
   return Joi.object({
