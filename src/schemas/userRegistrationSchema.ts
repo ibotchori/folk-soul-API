@@ -27,7 +27,7 @@ const userRegistrationSchema = async (data: userInterface) => {
       )
       .required()
       .messages({
-        'string.pattern.base': `Only lowercase letters and numbers are allowed.`,
+        'string.pattern.base': `Username should be lowercase letters and numbers.`,
         'string.empty': `Username cannot be an empty field`,
         'string.base': 'Username field should be string.',
         'string.min':
