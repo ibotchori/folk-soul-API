@@ -1,5 +1,5 @@
 import Joi from 'joi'
-import { userInterface } from 'types/Joi'
+import { userInterface } from 'types/types'
 import User from '../models/userModel'
 
 const usernameShouldBeUniqueRule =
