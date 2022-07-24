@@ -2,6 +2,7 @@ import express from 'express'
 import {
   bandMemberRegister,
   changeMemberAvatar,
+  updateMember,
 } from 'controllers/bandMemberController'
 import { multerConfig } from '../config/multer'
 import multer from 'multer'
@@ -14,5 +15,6 @@ router.post(
   multer(multerConfig).single('image'),
   changeMemberAvatar
 )
+router.put('/update/:id', updateMember)
 
 export default router
