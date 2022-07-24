@@ -2,6 +2,7 @@ import express from 'express'
 import {
   bandMemberRegister,
   changeMemberAvatar,
+  deleteMember,
   updateMember,
 } from 'controllers/bandMemberController'
 import { multerConfig } from '../config/multer'
@@ -16,5 +17,6 @@ router.post(
   changeMemberAvatar
 )
 router.put('/update/:id', updateMember)
+router.delete('/delete/:id', deleteMember)
 
 export default router

@@ -106,3 +106,28 @@ export const updateMember = asyncHandler(async (req, res) => {
     throw new Error('Params should be ObjectID format.')
   }
 })
+
+// @desc Delete member
+// @route DELETE /api/band-member/delete/:id
+// @access Private
+export const deleteMember = asyncHandler(async (req, res) => {
+  // validate ObjectID with mongoose
+  if (mongoose.Types.ObjectId.isValid(req.params.id)) {
+    // get specific member from database by id
+    const member = await BandMember.findById(req.params.id)
+    if (!member) {
+      res.status(400)
+      throw new Error('No member found with this id.')
+    }
+    // remove member from database
+    await member.remove()
+    // see removed member id response
+    res.status(200).json({
+      message: 'Member deleted',
+      _id: req.params.id,
+    })
+  } else {
+    res.status(422)
+    throw new Error('Params should be ObjectID format.')
+  }
+})
