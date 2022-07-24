@@ -4,6 +4,9 @@ import BandMember from 'models/bandMemberModel'
 import bandMemberRegistrationSchema from 'schemas/bandMemberRegistrationSchema'
 import mongoose from 'mongoose'
 
+// @desc Register member
+// @route GET /api/band-member/register
+// @access Private
 export const bandMemberRegister = asyncHandler(
   async (req: Request, res: Response) => {
     /* Validation with Joi */
@@ -34,6 +37,10 @@ export const bandMemberRegister = asyncHandler(
     }
   }
 )
+
+// @desc Change member avatar
+// @route GET /api/band-member/change-avatar/:id
+// @access Private
 export const changeMemberAvatar = asyncHandler(
   async (req: Request, res: Response) => {
     if (!req.file) {
@@ -126,6 +133,27 @@ export const deleteMember = asyncHandler(async (req, res) => {
       message: 'Member deleted',
       _id: req.params.id,
     })
+  } else {
+    res.status(422)
+    throw new Error('Params should be ObjectID format.')
+  }
+})
+
+// @desc Get specific member info
+// @route GET /api/band-member/get/:id
+// @access Private
+export const getMember = asyncHandler(async (req, res) => {
+  // validate ObjectID with mongoose
+  if (mongoose.Types.ObjectId.isValid(req.params.id)) {
+    // get specific member from database by id
+    const member = await BandMember.findById(req.params.id)
+    if (!member) {
+      res.status(400)
+      throw new Error('No member found with this id.')
+    }
+
+    // show member on response
+    res.status(200).json(member)
   } else {
     res.status(422)
     throw new Error('Params should be ObjectID format.')

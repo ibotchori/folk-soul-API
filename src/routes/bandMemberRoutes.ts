@@ -3,6 +3,7 @@ import {
   bandMemberRegister,
   changeMemberAvatar,
   deleteMember,
+  getMember,
   updateMember,
 } from 'controllers/bandMemberController'
 import { multerConfig } from '../config/multer'
@@ -18,5 +19,6 @@ router.post(
 )
 router.put('/update/:id', updateMember)
 router.delete('/delete/:id', deleteMember)
+router.get('/get/:id', getMember)
 
 export default router
