@@ -9,6 +9,7 @@ const BandMemberSchema = new Schema<bandMemberInterface>(
     orbitLength: { type: Number, required: true },
     color: { type: String, required: true },
     biography: { type: String, required: true },
+    avatar: { type: String },
   },
   { versionKey: false }
 )

@@ -12,4 +12,5 @@ export interface bandMemberInterface {
   orbitLength: number
   color: string
   biography: string
+  avatar?: string
 }
