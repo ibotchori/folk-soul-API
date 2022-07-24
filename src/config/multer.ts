@@ -3,17 +3,17 @@ import { resolve } from 'path'
 import { randomBytes } from 'crypto'
 
 export const multerConfig = {
-  dest: resolve(__dirname, '..', '..', 'uploads'),
+  dest: resolve(__dirname, '..', '..', 'images'),
   storage: diskStorage({
     destination: (request, file, callback) => {
-      callback(null, resolve(__dirname, '..', '..', 'uploads'))
+      callback(null, resolve(__dirname, '..', '..', 'images'))
     },
     filename: (request, file, callback) => {
       randomBytes(16, (error, hash: any) => {
         if (error) {
           callback(error, file.filename)
         }
-        const filename = `${hash.toString('HEX')}.png`
+        const filename = `${hash.toString('HEX')}${file.originalname}`
         callback(null, filename)
       })
     },
