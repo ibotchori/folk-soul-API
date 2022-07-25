@@ -1,5 +1,6 @@
 import express from 'express'
 import {
+  getAllSocialLinks,
   socialLinkAvatarChange,
   socialLinkDelete,
   socialLinkRegister,
@@ -18,5 +19,6 @@ router.post(
   socialLinkAvatarChange
 )
 router.delete('/delete/:id', socialLinkDelete)
+router.get('/get-all', getAllSocialLinks)
 
 export default router

@@ -133,3 +133,16 @@ export const socialLinkDelete = asyncHandler(async (req, res) => {
     throw new Error('Params should be ObjectID format.')
   }
 })
+
+// @desc Get all Social link
+// @route GET /api/social-link/getall
+// @access Public
+export const getAllSocialLinks = asyncHandler(async (req, res) => {
+  const allSocialLinks = await SocialLink.find()
+  if (!allSocialLinks) {
+    res.status(400)
+    throw new Error('No Social link found.')
+  }
+  // show member on response
+  res.status(200).json(allSocialLinks)
+})
