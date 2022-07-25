@@ -3,6 +3,7 @@ import asyncHandler from 'express-async-handler'
 import mongoose from 'mongoose'
 import socialLinkRegistrationSchema from 'schemas/socialLinkRegistrationSchema'
 import SocialLink from 'models/socialLinkModel'
+import socialLinkUpdateSchema from 'schemas/socialLinkUpdateSchema'
 
 // @desc Register social link
 // @route GET /api/social-link/register
@@ -34,3 +35,51 @@ export const socialLinkRegister = asyncHandler(
     }
   }
 )
+
+// @desc Update Social link
+// @route PUT /api/social-link/update/:id
+// @access Private
+export const socialLinkUpdate = asyncHandler(async (req, res) => {
+  // validate ObjectID with mongoose
+  if (mongoose.Types.ObjectId.isValid(req.params.id)) {
+    // get specific member from database by id
+    const socialLink = await SocialLink.findById(req.params.id)
+    if (!socialLink) {
+      res.status(400)
+      throw new Error('There is no social link with this ID.')
+    }
+    /* Validation with Joi */
+    const validator = await socialLinkUpdateSchema(req.body)
+    const { value: data, error } = validator.validate(req.body)
+
+    if (error) {
+      res.status(422)
+      throw new Error(error.details[0].message)
+    }
+
+    // value from Joi
+    const { name, url } = data
+
+    // update social link
+    await SocialLink.findByIdAndUpdate(
+      req.params.id,
+      {
+        name,
+        url,
+      },
+      {
+        // create property if it does not exist
+        new: true,
+      }
+    )
+
+    // see updated social link id on response
+    res.status(200).json({
+      message: 'Social link updated.',
+      _id: socialLink.id,
+    })
+  } else {
+    res.status(422)
+    throw new Error('Params should be ObjectID format.')
+  }
+})
