@@ -160,3 +160,16 @@ export const getMember = asyncHandler(async (req, res) => {
     throw new Error('Params should be ObjectID format.')
   }
 })
+
+// @desc Get all registered members
+// @route GET /api/band-member/getall
+// @access Public
+export const getAllMembers = asyncHandler(async (req, res) => {
+  const allMembers = await BandMember.find()
+  if (!allMembers) {
+    res.status(400)
+    throw new Error('No members found.')
+  }
+  // show member on response
+  res.status(200).json(allMembers)
+})

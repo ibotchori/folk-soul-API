@@ -3,6 +3,7 @@ import {
   bandMemberRegister,
   changeMemberAvatar,
   deleteMember,
+  getAllMembers,
   getMember,
   updateMember,
 } from 'controllers/bandMemberController'
@@ -22,5 +23,6 @@ router.post(
 router.put('/update/:id', authMiddleware, updateMember)
 router.delete('/delete/:id', authMiddleware, deleteMember)
 router.get('/get/:id', authMiddleware, getMember)
+router.get('/get-all', getAllMembers)
 
 export default router
