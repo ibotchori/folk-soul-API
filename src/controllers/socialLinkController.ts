@@ -8,7 +8,7 @@ import socialLinkUpdateSchema from 'schemas/socialLinkUpdateSchema'
 // @desc Register social link
 // @route GET /api/social-link/register
 // @access Private
-export const socialLinkRegister = asyncHandler(
+export const registerSocialLink = asyncHandler(
   async (req: Request, res: Response) => {
     /* Validation with Joi */
     const validator = await socialLinkRegistrationSchema(req.body)
@@ -39,7 +39,7 @@ export const socialLinkRegister = asyncHandler(
 // @desc Update Social link
 // @route PUT /api/social-link/update/:id
 // @access Private
-export const socialLinkUpdate = asyncHandler(async (req, res) => {
+export const updateSocialLink = asyncHandler(async (req, res) => {
   // validate ObjectID with mongoose
   if (mongoose.Types.ObjectId.isValid(req.params.id)) {
     // get specific member from database by id
@@ -87,7 +87,7 @@ export const socialLinkUpdate = asyncHandler(async (req, res) => {
 // @desc Change social link avatar
 // @route PUT /api/social-link/change-avatar/:id
 // @access Private
-export const socialLinkAvatarChange = asyncHandler(
+export const changeSocialLinkAvatar = asyncHandler(
   async (req: Request, res: Response) => {
     if (!req.file) {
       res.status(422)
@@ -112,7 +112,7 @@ export const socialLinkAvatarChange = asyncHandler(
 // @desc Delete Social link
 // @route DELETE /api/social-link/delete/:id
 // @access Private
-export const socialLinkDelete = asyncHandler(async (req, res) => {
+export const deleteSocialLink = asyncHandler(async (req, res) => {
   // validate ObjectID with mongoose
   if (mongoose.Types.ObjectId.isValid(req.params.id)) {
     // get specific social link from database by id

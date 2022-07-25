@@ -1,10 +1,10 @@
 import express from 'express'
 import {
-  bandMemberRegister,
   changeMemberAvatar,
   deleteMember,
   getAllMembers,
   getMember,
+  registerMember,
   updateMember,
 } from 'controllers/bandMemberController'
 import { multerConfig } from '../config/multer'
@@ -13,7 +13,7 @@ import authMiddleware from 'middleware/authMiddleware'
 
 const router = express.Router()
 
-router.post('/register', authMiddleware, bandMemberRegister)
+router.post('/register', authMiddleware, registerMember)
 router.post(
   '/change-avatar/:id',
   multer(multerConfig).single('image'),

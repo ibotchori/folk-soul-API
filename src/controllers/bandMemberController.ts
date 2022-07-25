@@ -8,7 +8,7 @@ import bandMemberUpdateSchema from 'schemas/bandMemberUpdateSchema'
 // @desc Register member
 // @route GET /api/band-member/register
 // @access Private
-export const bandMemberRegister = asyncHandler(
+export const registerMember = asyncHandler(
   async (req: Request, res: Response) => {
     /* Validation with Joi */
     const validator = await bandMemberRegistrationSchema(req.body)
