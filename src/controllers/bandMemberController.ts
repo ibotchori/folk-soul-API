@@ -3,6 +3,7 @@ import asyncHandler from 'express-async-handler'
 import BandMember from 'models/bandMemberModel'
 import bandMemberRegistrationSchema from 'schemas/bandMemberRegistrationSchema'
 import mongoose from 'mongoose'
+import bandMemberUpdateSchema from 'schemas/bandMemberUpdateSchema'
 
 // @desc Register member
 // @route GET /api/band-member/register
@@ -76,7 +77,7 @@ export const updateMember = asyncHandler(async (req, res) => {
       throw new Error('There is no member with this ID.')
     }
     /* Validation with Joi */
-    const validator = await bandMemberRegistrationSchema(req.body)
+    const validator = await bandMemberUpdateSchema(req.body)
     const { value: data, error } = validator.validate(req.body)
 
     if (error) {
