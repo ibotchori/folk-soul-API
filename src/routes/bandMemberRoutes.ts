@@ -8,17 +8,19 @@ import {
 } from 'controllers/bandMemberController'
 import { multerConfig } from '../config/multer'
 import multer from 'multer'
+import authMiddleware from 'middleware/authMiddleware'
 
 const router = express.Router()
 
-router.post('/register', bandMemberRegister)
+router.post('/register', authMiddleware, bandMemberRegister)
 router.post(
   '/change-avatar/:id',
   multer(multerConfig).single('image'),
+  authMiddleware,
   changeMemberAvatar
 )
-router.put('/update/:id', updateMember)
-router.delete('/delete/:id', deleteMember)
-router.get('/get/:id', getMember)
+router.put('/update/:id', authMiddleware, updateMember)
+router.delete('/delete/:id', authMiddleware, deleteMember)
+router.get('/get/:id', authMiddleware, getMember)
 
 export default router
