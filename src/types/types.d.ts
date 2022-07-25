@@ -14,3 +14,9 @@ export interface bandMemberInterface {
   biography: string
   avatar?: string
 }
+export interface socialLinkInterface {
+  _id?: mongoose.Types.ObjectId
+  name: string
+  url: string
+  avatar?: string
+}
