@@ -40,7 +40,7 @@ export const bandMemberRegister = asyncHandler(
 )
 
 // @desc Change member avatar
-// @route GET /api/band-member/change-avatar/:id
+// @route PUT /api/band-member/change-avatar/:id
 // @access Private
 export const changeMemberAvatar = asyncHandler(
   async (req: Request, res: Response) => {
