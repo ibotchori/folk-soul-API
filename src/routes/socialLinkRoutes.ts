@@ -1,6 +1,7 @@
 import express from 'express'
 import {
   socialLinkAvatarChange,
+  socialLinkDelete,
   socialLinkRegister,
   socialLinkUpdate,
 } from 'controllers/socialLinkCOntroller'
@@ -16,5 +17,6 @@ router.post(
   multer(multerConfig).single('image'),
   socialLinkAvatarChange
 )
+router.delete('/delete/:id', socialLinkDelete)
 
 export default router

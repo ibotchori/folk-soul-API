@@ -108,3 +108,28 @@ export const socialLinkAvatarChange = asyncHandler(
     })
   }
 )
+
+// @desc Delete Social link
+// @route DELETE /api/social-link/delete/:id
+// @access Private
+export const socialLinkDelete = asyncHandler(async (req, res) => {
+  // validate ObjectID with mongoose
+  if (mongoose.Types.ObjectId.isValid(req.params.id)) {
+    // get specific social link from database by id
+    const socialLink = await SocialLink.findById(req.params.id)
+    if (!socialLink) {
+      res.status(400)
+      throw new Error('No Social Link found with this id.')
+    }
+    // remove social link from database
+    await socialLink.remove()
+    // see removed social link id response
+    res.status(200).json({
+      message: 'Social Link deleted',
+      _id: req.params.id,
+    })
+  } else {
+    res.status(422)
+    throw new Error('Params should be ObjectID format.')
+  }
+})
