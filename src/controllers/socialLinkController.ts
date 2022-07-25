@@ -134,8 +134,29 @@ export const deleteSocialLink = asyncHandler(async (req, res) => {
   }
 })
 
+// @desc Get specific social link info
+// @route GET /api/social-link/get/:id
+// @access Private
+export const getSocialLink = asyncHandler(async (req, res) => {
+  // validate ObjectID with mongoose
+  if (mongoose.Types.ObjectId.isValid(req.params.id)) {
+    // get specific social link from database by id
+    const socialLink = await SocialLink.findById(req.params.id)
+    if (!socialLink) {
+      res.status(400)
+      throw new Error('No social link found with this id.')
+    }
+
+    // show social link on response
+    res.status(200).json(socialLink)
+  } else {
+    res.status(422)
+    throw new Error('Params should be ObjectID format.')
+  }
+})
+
 // @desc Get all Social link
-// @route GET /api/social-link/getall
+// @route GET /api/social-link/get/:id
 // @access Public
 export const getAllSocialLinks = asyncHandler(async (req, res) => {
   const allSocialLinks = await SocialLink.find()

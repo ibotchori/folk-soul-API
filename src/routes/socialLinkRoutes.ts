@@ -5,6 +5,7 @@ import {
   deleteSocialLink,
   registerSocialLink,
   updateSocialLink,
+  getSocialLink,
 } from 'controllers/socialLinkCOntroller'
 import { multerConfig } from '../config/multer'
 import multer from 'multer'
@@ -19,6 +20,7 @@ router.post(
   changeSocialLinkAvatar
 )
 router.delete('/delete/:id', deleteSocialLink)
+router.get('/get/:id', getSocialLink)
 router.get('/get-all', getAllSocialLinks)
 
 export default router
