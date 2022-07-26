@@ -14,7 +14,7 @@ connectDB()
 // Middleware
 server.use(express.json()) // <-- body parser
 server.use(express.urlencoded({ extended: false })) // <-- url encode
-server.use('/uploads/images', express.static('uploads/images')) // <-- public access on upload/images folder
+server.use('/uploads/images', express.static('uploads/images')) // <-- public access on uploads/images folder
 
 server.use('/api/user', userRoutes)
 server.use('/api/band-member', bandMemberRoutes)
