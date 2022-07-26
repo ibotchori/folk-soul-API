@@ -59,7 +59,7 @@ export const changeMemberAvatar = asyncHandler(
 
       await BandMember.findByIdAndUpdate(
         req.params.id,
-        { avatar: `${req.file.destination}/${req.file.filename}` },
+        { avatar: `/uploads/images/${req.file.filename}` },
         {
           // create property if it does not exist
           new: true,
@@ -67,7 +67,7 @@ export const changeMemberAvatar = asyncHandler(
       )
       res.status(201).json({
         message: 'Avatar changed.',
-        path: `${req.file.destination}/${req.file.filename}`,
+        path: `/uploads/images/${req.file.filename}`,
       })
     } else {
       res.status(422)
