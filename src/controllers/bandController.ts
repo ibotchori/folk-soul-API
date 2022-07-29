@@ -118,3 +118,16 @@ export const changeBandAvatar = asyncHandler(
     }
   }
 )
+
+// @desc Get registered Band
+// @route GET /api/band
+// @access Public
+export const getBand = asyncHandler(async (req, res) => {
+  const band = await Band.find()
+  if (!band) {
+    res.status(400)
+    throw new Error('No Band found.')
+  }
+  // show member on response
+  res.status(200).json(band[0])
+})

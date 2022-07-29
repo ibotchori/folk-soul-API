@@ -4,6 +4,7 @@ import multer from 'multer'
 import authMiddleware from 'middleware/authMiddleware'
 import {
   changeBandAvatar,
+  getBand,
   registerBand,
   updateBand,
 } from 'controllers/bandController'
@@ -17,5 +18,6 @@ router.post(
   multer(multerConfig).single('image'),
   changeBandAvatar
 )
+router.get('/', getBand)
 
 export default router
