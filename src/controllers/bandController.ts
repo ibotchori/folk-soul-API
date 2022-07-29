@@ -80,3 +80,41 @@ export const updateBand = asyncHandler(async (req, res) => {
     throw new Error('Params should be ObjectID format.')
   }
 })
+
+// @desc Change band avatar
+// @route POST /api/band/change-avatar/:id
+// @access Private
+export const changeBandAvatar = asyncHandler(
+  async (req: Request, res: Response) => {
+    // validate ObjectID with mongoose
+    if (mongoose.Types.ObjectId.isValid(req.params.id)) {
+      // get specific band from database by id
+      const band = await Band.findById(req.params.id)
+      if (!band) {
+        res.status(400)
+        throw new Error('No Band found with this id.')
+      }
+
+      if (!req.file) {
+        res.status(422)
+        throw new Error('Please select the file')
+      }
+
+      await Band.findByIdAndUpdate(
+        req.params.id,
+        { avatar: `/uploads/images/${req.file.filename}` },
+        {
+          // create property if it does not exist
+          new: true,
+        }
+      )
+      res.status(201).json({
+        message: 'Avatar changed.',
+        path: `/uploads/images/${req.file.filename}`,
+      })
+    } else {
+      res.status(422)
+      throw new Error('Params should be ObjectID format.')
+    }
+  }
+)
