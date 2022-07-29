@@ -20,3 +20,8 @@ export interface socialLinkInterface {
   url: string
   avatar?: string
 }
+export interface bandInterface {
+  _id?: mongoose.Types.ObjectId
+  text: string
+  avatar?: string
+}
