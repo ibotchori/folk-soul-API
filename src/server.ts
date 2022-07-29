@@ -1,5 +1,10 @@
 import express from 'express'
-import { userRoutes, bandMemberRoutes, socialLinkRoutes } from './routes'
+import {
+  userRoutes,
+  bandMemberRoutes,
+  socialLinkRoutes,
+  bandRoutes,
+} from './routes'
 import { errorHandler } from 'middleware/errorMiddleware'
 import connectDB from './config/db'
 
@@ -19,6 +24,7 @@ server.use('/uploads/images', express.static('uploads/images')) // <-- public ac
 server.use('/api/user', userRoutes)
 server.use('/api/band-member', bandMemberRoutes)
 server.use('/api/social-link', socialLinkRoutes)
+server.use('/api/band', bandRoutes)
 
 // overwrite the default express error handler with custom error handler middleware
 server.use(errorHandler) // <-- error handler middleware

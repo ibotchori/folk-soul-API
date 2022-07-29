@@ -6,7 +6,7 @@ import SocialLink from 'models/socialLinkModel'
 import socialLinkUpdateSchema from 'schemas/socialLinkUpdateSchema'
 
 // @desc Register social link
-// @route GET /api/social-link/register
+// @route POST /api/social-link/register
 // @access Private
 export const registerSocialLink = asyncHandler(
   async (req: Request, res: Response) => {
@@ -85,7 +85,7 @@ export const updateSocialLink = asyncHandler(async (req, res) => {
 })
 
 // @desc Change social link avatar
-// @route PUT /api/social-link/change-avatar/:id
+// @route POST /api/social-link/change-avatar/:id
 // @access Private
 export const changeSocialLinkAvatar = asyncHandler(
   async (req: Request, res: Response) => {
