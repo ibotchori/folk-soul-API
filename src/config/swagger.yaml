@@ -1,0 +1,89 @@
+openapi: 3.0.0
+info:
+  title: Admin Panel API
+  description: Dashboard of companies and employees
+  version: 0.1.9
+
+servers:
+  - url: http://localhost:4000/
+    description: local server
+  - url: http://producation.app/
+    description: production server
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+paths:
+  /api/user/register:
+    post:
+      summary: Create new user
+      tags:
+        - Auth
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                  required: true
+                password:
+                  type: string
+                  required: true
+                repeatPassword:
+                  type: string
+                  required: true
+            example:
+              username: daniel
+              password: "123123"
+              repeatPassword: "123123"
+      responses:
+        '200': 
+          description: Returns registered user ID
+          content:
+            application/json:
+              schema: 
+                  type: object
+                  properties:                  
+                    message:
+                      type: string
+                    _id:
+                      type: string
+                  example:
+                      message: "User Registered"
+                      _id: "62c2ef14dc41eb120af63460"
+  /api/user/login:
+    post:
+      summary: Login user
+      tags:
+        - Auth
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                  required: true
+                password:
+                  type: string
+                  required: true
+            example:
+              username: daniel
+              password: "123123"
+      responses:
+        '200': 
+          description: Returns user token
+          content:
+            application/json:
+              schema: 
+                  type: object
+                  properties:
+                    token:
+                      type: string
+                  example:
+                      token: "eyJhbGciOiJIU1NzA0MzQyOCwiZX-E7VSXu7C2ZcT-uyCyjzXp2FiNrs_xCKwV8"

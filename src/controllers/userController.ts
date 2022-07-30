@@ -42,7 +42,7 @@ export const userRegister = asyncHandler(
     // back user information on response
     if (user) {
       res.status(201).json({
-        message: 'User is registered.',
+        message: 'User registered.',
         _id: user.id,
       })
     }

@@ -7,6 +7,13 @@ import {
 } from './routes'
 import { errorHandler } from 'middleware/errorMiddleware'
 import connectDB from './config/db'
+import YAML from 'yamljs'
+import swaggerUI from 'swagger-ui-express'
+
+/**
+ * Load swagger document.
+ */
+const swaggerDocument = YAML.load('./src/config/swagger.yaml')
 
 import dotenv from 'dotenv'
 dotenv.config()
@@ -15,6 +22,11 @@ const PORT = process.env.SERVER_PORT || 4444
 const server = express()
 // Connect to mongo database
 connectDB()
+
+/**
+ * Setting up swagger middleware.
+ */
+server.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocument))
 
 // Middleware
 server.use(express.json()) // <-- body parser
