@@ -16,6 +16,7 @@ components:
       scheme: bearer
       bearerFormat: JWT
 paths:
+# User routes
   /api/user/register:
     post:
       summary: Create new user
@@ -53,7 +54,7 @@ paths:
                     _id:
                       type: string
                   example:
-                      message: "User Registered"
+                      message: "User Registered."
                       _id: "62c2ef14dc41eb120af63460"
   /api/user/login:
     post:
@@ -87,3 +88,620 @@ paths:
                       type: string
                   example:
                       token: "eyJhbGciOiJIU1NzA0MzQyOCwiZX-E7VSXu7C2ZcT-uyCyjzXp2FiNrs_xCKwV8"
+# Band member routes                      
+  /api/band-member/register:
+    post:
+      summary: Create new member
+      tags:
+        - Band Member
+      security:
+        - bearerAuth: []  
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  required: true
+                instrument:
+                  type: string
+                  required: true
+                orbitLength:
+                  type: number
+                  required: true
+                color:
+                  type: string
+                  required: true  
+                biography:
+                  type: string
+                  required: true  
+            example:
+              name: "დავითი"
+              instrument: "გიტარა"              
+              color: "#2C1414"             
+              orbitLength: 10
+              biography: "გადასარევი ადამიანი"
+      responses:
+        '200': 
+          description: Returns created member ID
+          content:
+            application/json:
+              schema: 
+                  type: object
+                  properties:
+                    message:
+                      type: string
+                    _id:
+                      type: string
+                  example:
+                      message: "Member registered."                     
+                      _id: "62ce9437c5089e55c98fe144"
+  /api/band-member/change-avatar/{memberId}:
+    post:
+      summary: Change member avatar
+      tags:
+        - Band Member
+      security:
+        - bearerAuth: [] 
+      parameters:
+        - in: path
+          name: memberId # Note the name is the same as in the path
+          schema:
+            type: string
+            minimum: 1
+          required: true
+          description: Band member ID
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                image:
+                  type: string
+                  format: binary
+                  required: true
+      responses:
+        '200': 
+          description: Returns avatar path
+          content:
+            application/json:
+              schema: 
+                  type: object
+                  properties:                  
+                    message:
+                      type: string
+                    path:
+                      type: string
+                  example:
+                    message: "Avatar changed."
+                    path: "/uploads/images/filename"
+  /api/band-member/update/{memberId}/:
+    put:
+      summary: Update member
+      tags:
+        - Band Member
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: memberId # Note the name is the same as in the path
+          schema:
+            type: string
+            minimum: 1
+          required: true
+          description: Band member ID
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  required: true
+                instrument:
+                  type: string
+                  required: true
+                orbitLength:
+                  type: number
+                  required: true
+                color:
+                  type: string
+                  required: true  
+                biography:
+                  type: string
+                  required: true  
+            example:
+              name: "გელა"
+              instrument: "საყვირი"              
+              color: "#199C21"             
+              orbitLength: 5
+              biography: "უბრალოდ კარგი ადამიანი"
+      responses:
+        '200': 
+          description: Returns updated member ID
+          content:
+            application/json:
+              schema: 
+                  type: object
+                  properties:
+                    message:
+                      type: string
+                    _id:
+                      type: string
+                  example:
+                      message: "Member updated."
+                      _id: "62ce9437c5089e55c98fe144"
+  /api/band-member/delete/{memberId}/:
+    delete:
+      summary: Delete member
+      tags:
+        - Band Member
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: memberId # Note the name is the same as in the path
+          schema:
+            type: string
+            minimum: 1
+          required: true
+          description: Band member ID
+      responses:
+        '200': 
+          description: Returns deleted member ID
+          content:
+            application/json:
+              schema: 
+                  type: object
+                  properties:
+                    message:
+                      type: string
+                    _id:
+                      type: string
+                  example:
+                      message: "Member deleted."                     
+                      _id: "62ce9437c5089e55c98fe144"
+  /api/band-member/get/{memberId}:
+    get:
+      summary: Get member info
+      tags:
+        - Band Member
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: memberId # Note the name is the same as in the path
+          schema:
+            type: string
+            minimum: 1
+          required: true
+          description: Band member ID
+      responses:
+        '200': 
+          description: Returns information of member
+          content:
+            application/json:
+              schema: 
+                  type: object
+                  properties:                  
+                    _id:
+                      type: string
+                    name:
+                      type: string
+                    instrument:
+                      type: string
+                    orbitLength:
+                      type: number
+                    biography:
+                      type: string
+                    avatar:
+                      type: string
+                  example:
+                    _id: "62c2ef14dc41eb120af63460"
+                    name: "დავითი"                             
+                    instrument: "დრამი"
+                    orbitLength: 8
+                    biography: "გადასარევი ადამიანი"
+                    avatar: "/uploads/images/filename"
+  /api/band-member/get-all:
+    get:
+      summary: Get all members
+      tags:
+        - Band Member
+      responses:
+        '200': 
+          description: Returns all registered members
+          content:
+            application/json:
+              schema: 
+                  type: array
+                  items: 
+                    type: object
+                    properties:
+                      _id:
+                        type: string
+                      name:
+                        type: string
+                      instrument:
+                        type: string
+                      orbitLength:
+                        type: number
+                      biography:
+                        type: string
+                      avatar:
+                        type: string
+                  example: # Returns object array
+                   -  _id: "62c2ef14dc41eb120af63460"
+                      name: "დავითი"                             
+                      instrument: "დრამი"
+                      orbitLength: 8
+                      biography: "გადასარევი ადამიანი"
+                      avatar: "/uploads/images/filename"
+                   -  _id: "62c2ef14dc41eb120af63461"
+                      name: "კონსტანტინე"                             
+                      instrument: "ვიოლინო"
+                      orbitLength: 4
+                      biography: "ხუთოსანა"
+# Social link routes
+  /api/social-link/register:
+    post:
+      summary: Create new social link
+      tags:
+        - Social Link
+      security:
+        - bearerAuth: []  
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  required: true
+                url:
+                  type: string
+                  required: true
+            example:
+              name: "Youtube"
+              url: "https://www.youtube.com/"
+      responses:
+        '200': 
+          description: Returns created social link ID
+          content:
+            application/json:
+              schema: 
+                  type: object
+                  properties:
+                    message:
+                      type: string
+                    _id:
+                      type: string
+                  example:
+                      message: "Social link registered."                     
+                      _id: "62ce9437c5089e55c98fe144"
+  /api/social-link/change-avatar/{linkId}:
+    post:
+      summary: Change social link avatar
+      tags:
+        - Social Link
+      security:
+        - bearerAuth: [] 
+      parameters:
+        - in: path
+          name: linkId # Note the name is the same as in the path
+          schema:
+            type: string
+            minimum: 1
+          required: true
+          description: Social link ID
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                image:
+                  type: string
+                  format: binary
+                  required: true
+      responses:
+        '200': 
+          description: Returns avatar path
+          content:
+            application/json:
+              schema: 
+                  type: object
+                  properties:                  
+                    message:
+                      type: string
+                    path:
+                      type: string
+                  example:
+                    message: "Avatar changed."
+                    path: "/uploads/images/filename"
+  /api/social-link/update/{linkId}/:
+    put:
+      summary: Update social link
+      tags:
+        - Social Link
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: linkId # Note the name is the same as in the path
+          schema:
+            type: string
+            minimum: 1
+          required: true
+          description: Social link ID
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  required: true
+                url:
+                  type: string
+                  required: true
+            example:
+              name: "Instagram"
+              url: "https://www.instagram.com/"
+      responses:
+        '200': 
+          description: Returns updated social link ID
+          content:
+            application/json:
+              schema: 
+                  type: object
+                  properties:
+                    message:
+                      type: string
+                    _id:
+                      type: string
+                  example:
+                      message: "Social link updated."                     
+                      _id: "62ce9437c5089e55c98fe144"
+  /api/social-link/delete/{linkId}/:
+    delete:
+      summary: Delete social link
+      tags:
+        - Social Link
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: linkId # Note the name is the same as in the path
+          schema:
+            type: string
+            minimum: 1
+          required: true
+          description: Social link ID
+      responses:
+        '200': 
+          description: Returns deleted link ID
+          content:
+            application/json:
+              schema: 
+                  type: object
+                  properties:
+                    message:
+                      type: string
+                    _id:
+                      type: string
+                  example:
+                      message: "Social link deleted."                     
+                      _id: "62ce9437c5089e55c98fe144"
+  /api/social-link/get/{linkId}:
+    get:
+      summary: Get social link info
+      tags:
+        - Social Link
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: linkId # Note the name is the same as in the path
+          schema:
+            type: string
+            minimum: 1
+          required: true
+          description: Social link ID
+      responses:
+        '200': 
+          description: Returns information of Social link
+          content:
+            application/json:
+              schema: 
+                  type: object
+                  properties:                  
+                    _id:
+                      type: string
+                    name:
+                      type: string
+                    url:
+                      type: string
+                    avatar:
+                      type: string
+                  example:
+                    _id: "62c2ef14dc41eb120af63460"
+                    name: "Youtube"
+                    url: "https://www.youtube/"
+                    avatar: "/uploads/images/filename"
+  /api/social-link/get-all:
+    get:
+      summary: Get all social links
+      tags:
+        - Social Link
+      responses:
+        '200': 
+          description: Returns all registered Social links
+          content:
+            application/json:
+              schema: 
+                  type: array
+                  items: 
+                    type: object
+                    properties:
+                      _id:
+                        type: string
+                      name:
+                        type: string
+                      url:
+                        type: string
+                      avatar:
+                        type: string
+                  example: # Returns object array
+                   -  _id: "62c2ef14dc41eb120af63460"
+                      name: "Youtube" 
+                      url: "https://www.youtube/"
+                      avatar: "/uploads/images/filename"
+                   -  _id: "62c2ef14dc41eb120af63461"
+                      name: "Instagram" 
+                      url: "https://www.instagram.com/"
+# Band routes
+  /api/band:
+    get:
+      summary: Get band info
+      tags:
+        - Band
+      responses:
+        '200': 
+          description: Returns band info
+          content:
+            application/json:
+              schema:
+                  type: object
+                  properties:
+                    _id:
+                      type: string
+                    text:
+                       type: string
+                    avatar:
+                      type: string
+                  example:
+                      _id: "62c2ef14dc41eb120af63460"
+                      text: "დაწყვილების პერიოდი ზომიერ და არქტიკულ რეგიონებში მობინადრე დათვებისთვის, ჩვეულებრივ, გაზაფხულია. მაკეობა ხანმოკლეა, თუმცა იმის გამო, რომ დათვი არ მშობიარობს მანამ, სანამ ზამთრის შუა ძილში არ იქნება, განაყოფიერებული კვერცხუჯრედის საშვილოსნოში იმპლანტაცია ხდება მხოლოდ ოქტომბე-ნოემბერში დაწყვილების პერიოდი ზომიერ და არქტიკულ რეგიონებში მობინადრე დათვებისთვის, ჩვეულებრივ, გაზაფხულია."
+                      avatar: "/uploads/images/filename"
+  /api/band/register:
+    post:
+      summary: Create new band
+      tags:
+        - Band
+      security:
+        - bearerAuth: []  
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                text:
+                  type: string
+                  required: true
+            example:
+              text: "Some text"
+      responses:
+        '200': 
+          description: Returns created band ID
+          content:
+            application/json:
+              schema: 
+                  type: object
+                  properties:
+                    message:
+                      type: string
+                    _id:
+                      type: string
+                  example:
+                      message: "Band registered."
+                      _id: "62ce9437c5089e55c98fe144"
+  /api/band/change-avatar/{bandId}:
+    post:
+      summary: Change band avatar
+      tags:
+        - Band
+      security:
+        - bearerAuth: [] 
+      parameters:
+        - in: path
+          name: bandId # Note the name is the same as in the path
+          schema:
+            type: string
+            minimum: 1
+          required: true
+          description: Band ID
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                image:
+                  type: string
+                  format: binary
+                  required: true
+      responses:
+        '200': 
+          description: Returns avatar path
+          content:
+            application/json:
+              schema: 
+                  type: object
+                  properties:                  
+                    message:
+                      type: string
+                    path:
+                      type: string
+                  example:
+                    message: "Avatar changed."
+                    path: "/uploads/images/filename"
+  /api/band/update/{bandId}/:
+    put:
+      summary: Update band
+      tags:
+        - Band
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: bandId # Note the name is the same as in the path
+          schema:
+            type: string
+            minimum: 1
+          required: true
+          description: Band ID
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                text:
+                  type: string
+                  required: true
+            example:
+              text: "Updated text"
+      responses:
+        '200': 
+          description: Returns updated band ID
+          content:
+            application/json:
+              schema: 
+                  type: object
+                  properties:
+                    message:
+                      type: string
+                    _id:
+                      type: string
+                  example:
+                      message: "Band updated."                     
+                      _id: "62ce9437c5089e55c98fe144"
+  

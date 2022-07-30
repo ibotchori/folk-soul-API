@@ -11,10 +11,11 @@ import {
 
 const router = express.Router()
 
-router.post('/register', registerBand)
-router.put('/update/:id', updateBand)
+router.post('/register', authMiddleware, registerBand)
+router.put('/update/:id', authMiddleware, updateBand)
 router.post(
   '/change-avatar/:id',
+  authMiddleware,
   multer(multerConfig).single('image'),
   changeBandAvatar
 )

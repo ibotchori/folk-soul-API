@@ -54,7 +54,7 @@ export const changeMemberAvatar = asyncHandler(
       }
       if (!req.file) {
         res.status(422)
-        throw new Error('Please select the file')
+        throw new Error('Please select the file.')
       }
 
       await BandMember.findByIdAndUpdate(
@@ -143,7 +143,7 @@ export const deleteMember = asyncHandler(async (req, res) => {
     await member.remove()
     // see removed member id response
     res.status(200).json({
-      message: 'Member deleted',
+      message: 'Member deleted.',
       _id: req.params.id,
     })
   } else {

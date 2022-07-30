@@ -29,7 +29,7 @@ export const registerSocialLink = asyncHandler(
     // back created link id on response
     if (socialLink) {
       res.status(201).json({
-        message: 'Social Link registered.',
+        message: 'Social link registered.',
         _id: socialLink.id,
       })
     }
@@ -138,7 +138,7 @@ export const deleteSocialLink = asyncHandler(async (req, res) => {
     await socialLink.remove()
     // see removed social link id response
     res.status(200).json({
-      message: 'Social Link deleted',
+      message: 'Social link deleted.',
       _id: req.params.id,
     })
   } else {

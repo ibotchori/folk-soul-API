@@ -97,7 +97,7 @@ export const changeBandAvatar = asyncHandler(
 
       if (!req.file) {
         res.status(422)
-        throw new Error('Please select the file')
+        throw new Error('Please select the file.')
       }
 
       await Band.findByIdAndUpdate(
