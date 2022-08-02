@@ -9,7 +9,6 @@ import { errorHandler } from 'middleware/errorMiddleware'
 import connectDB from './config/db'
 import YAML from 'yamljs'
 import swaggerUI from 'swagger-ui-express'
-import cors from 'cors'
 
 /**
  * Load swagger document.
@@ -33,7 +32,6 @@ server.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocument))
 server.use(express.json()) // <-- body parser
 server.use(express.urlencoded({ extended: false })) // <-- url encode
 server.use('/uploads/images', express.static('uploads/images')) // <-- public access on uploads/images folder
-server.use(cors())
 
 server.use('/api/user', userRoutes)
 server.use('/api/band-member', bandMemberRoutes)
