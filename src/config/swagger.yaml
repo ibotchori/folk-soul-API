@@ -7,7 +7,7 @@ info:
 servers:
   - url: http://localhost:4000/
     description: local server
-  - url: http://producation.app/
+  - url: http://54.234.37.253/api-docs/
     description: production server
 components:
   securitySchemes:
