@@ -1,7 +1,7 @@
 openapi: 3.0.0
 info:
-  title: Admin Panel API
-  description: Dashboard of companies and employees
+  title: Music Band Platform
+  description: Dashboard of music band
   version: 0.1.9
 
 servers:
