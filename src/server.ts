@@ -40,6 +40,11 @@ server.use('/api/band-member', bandMemberRoutes)
 server.use('/api/social-link', socialLinkRoutes)
 server.use('/api/band', bandRoutes)
 
+// home page
+server.get('/', (req, res) => {
+  res.send('Add "/api-docs" in url to see documentation')
+})
+
 // overwrite the default express error handler with custom error handler middleware
 server.use(errorHandler) // <-- error handler middleware
 
